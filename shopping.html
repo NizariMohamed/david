@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DN|Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        /* Header Styles */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 2rem;
+            background-color: #fff;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 0.9rem;
+        }
+
+        .topbar ul {
+            display: flex;
+            justify-content: space-evenly;
+            list-style: none;
+            gap: 2rem;
+            padding-inline-start: 0;
+        }
+
+        .topbar ul li {
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .topbar ul li:hover {
+            color: #ff6b35;
+        }
+
+        .topbar ul li i {
+            margin-right: 0.5rem;
+            color: #6c757d;
+        }
+
+        .topbar button {
+            background-color: #ff6b35;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .topbar button:hover {
+            background-color: #e55a2b;
+        }
+
+        .searchbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            background-color: #fff;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .searchbar h1 {
+            color: #ff6b35;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .search {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 2px solid #ff6b35;
+            height: 2.5rem;
+            width: 20rem;
+            border-radius: 25px;
+            padding: 0 1rem;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .find {
+            border: none;
+            outline: none;
+            flex-grow: 1;
+            padding: 0.5rem;
+            background: transparent;
+        }
+
+        .search i {
+            color: #ff6b35;
+            cursor: pointer;
+        }
+
+        .searchbar a {
+            border: 2px solid #ff6b35;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            text-decoration: none;
+            color: #ff6b35;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .searchbar a:hover {
+            background-color: #ff6b35;
+            color: white;
+        }
+
+        nav {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            height: 3.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            height: 100%;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding-inline-start: 0;
+        }
+
+        nav ul a {
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            padding: 1rem 1.5rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        nav ul a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Main Content Styles */
+        main {
+            display: flex;
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Enhanced Sidebar */
+        .subcategories {
+            background: linear-gradient(135deg, #fff, #f8f9fa);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            min-width: 250px;
+            height: fit-content;
+            position: sticky;
+            top: 2rem;
+        }
+
+        .subcategories h3 {
+            color: #ff6b35;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .subcategories ul {
+            list-style: none;
+            padding-inline-start: 0;
+        }
+
+        .subcategories ul li {
+            border: none;
+            padding: 12px 16px;
+            margin-bottom: 0.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: #f8f9fa;
+            border-left: 4px solid transparent;
+            font-weight: 500;
+        }
+
+        .subcategories ul li:first-child {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-left: none;
+        }
+
+        .subcategories ul li:not(:first-child):hover {
+            background-color: #fff;
+            border-left: 4px solid #ff6b35;
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.2);
+        }
+
+        /* Enhanced Products Section */
+        .Products {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .book {
+            background: linear-gradient(135deg, #fff, #f8f9fa);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .book:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .book img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .book:hover img {
+            transform: scale(1.05);
+        }
+
+        .book-content {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .book h4 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #ff6b35;
+            margin-bottom: 1rem;
+        }
+
+        .book button {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            width: 100%;
+        }
+
+        .book button:hover {
+            background: linear-gradient(135deg, #e55a2b, #e6841a);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.3);
+        }
+
+        /* Wishlist Icon */
+        .wishlist-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .wishlist-btn:hover {
+            background: #ff6b35;
+            color: white;
+        }
+
+        /* Product Badge */
+        .badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            main {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .subcategories {
+                position: static;
+                min-width: unset;
+            }
+            
+            .Products {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1rem;
+            }
+            
+            .searchbar {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .search {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        /* Loading Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .book {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="topbar">
+            <ul>
+                <li><i class="fa-solid fa-user"></i>My Account</li>
+                <li><i class="fa-solid fa-heart"></i>Wishlist</li>
+                <li><i class="fa-solid fa-cart-shopping"></i>My Cart</li>
+                <li><i class="fa-solid fa-right-to-bracket"></i>Log In</li>
+            </ul>
+            <button>Track Order</button>
+        </div>
+
+        <div class="searchbar">
+            <h1>DN25 SHOPPING</h1>
+            <div class="search">
+                <input type="text" class="find" placeholder="Search for products...">
+                <i class="fa-solid fa-search"></i>
+            </div> 
+            <a href="#">Cart - TZS 0.00 &nbsp; <i class="fa-solid fa-cart-shopping"></i></a>
+        </div>
+
+        <div class="categoriesBar">
+            <nav>
+                <ul>
+                    <li><a href="">HOME</a></li>
+                    <li><a href="">BOOKS</a></li>
+                    <li><a href="">ELECTRONICS</a></li>
+                    <li><a href="">FURNITURE</a></li>
+                    <li><a href="">FASHION</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="subcategories">
+            <h3>Browse Categories</h3>
+            <ul>
+                <li>ALL CATEGORIES</li>
+                <li><i class="fa-solid fa-book"></i> Books & Literature</li>
+                <li><i class="fa-solid fa-laptop"></i> Electronics & Tech</li>
+                <li><i class="fa-solid fa-couch"></i> Furniture & Home</li>
+                <li><i class="fa-solid fa-tshirt"></i> Fashion & Style</li>
+                <li><i class="fa-solid fa-gamepad"></i> Gaming</li>
+                <li><i class="fa-solid fa-dumbbell"></i> Sports & Fitness</li>
+                <li><i class="fa-solid fa-car"></i> Automotive</li>
+            </ul>
+        </div>
+
+        <div class="Products">
+            <div class="book">
+                <div class="badge">New</div>
+                <button class="wishlist-btn"><i class="fa-solid fa-heart"></i></button>
+                <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=300&h=200&fit=crop" alt="CSS Concepts Book">
+                <div class="book-content">
+                    <h4>Complete Guide to CSS</h4>
+                    <div class="price">TZS 25,000</div>
+                    <button>Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="book">
+                <div class="badge">Popular</div>
+                <button class="wishlist-btn"><i class="fa-solid fa-heart"></i></button>
+                <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=300&h=200&fit=crop" alt="JavaScript Book">
+                <div class="book-content">
+                    <h4>JavaScript Mastery</h4>
+                    <div class="price">TZS 30,000</div>
+                    <button>Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="book">
+                <button class="wishlist-btn"><i class="fa-solid fa-heart"></i></button>
+                <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=300&h=200&fit=crop" alt="Programming Book">
+                <div class="book-content">
+                    <h4>Python Programming</h4>
+                    <div class="price">TZS 28,000</div>
+                    <button>Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="book">
+                <div class="badge">Sale</div>
+                <button class="wishlist-btn"><i class="fa-solid fa-heart"></i></button>
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=200&fit=crop" alt="Web Development Book">
+                <div class="book-content">
+                    <h4>Web Development Basics</h4>
+                    <div class="price">TZS 22,000</div>
+                    <button>Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="book">
+                <button class="wishlist-btn"><i class="fa-solid fa-heart"></i></button>
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=300&h=200&fit=crop" alt="Design Book">
+                <div class="book-content">
+                    <h4>UI/UX Design Principles</h4>
+                    <div class="price">TZS 35,000</div>
+                    <button>Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="book">
+                <button class="wishlist-btn"><i class="fa-solid fa-heart"></i></button>
+                <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=300&h=200&fit=crop" alt="Data Science Book">
+                <div class="book-content">
+                    <h4>Data Science Handbook</h4>
+                    <div class="price">TZS 40,000</div>
+                    <button>Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <!-- Footer content can be added here -->
+    </footer>
+</body>
+</html>
